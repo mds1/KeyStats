@@ -1,19 +1,29 @@
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+// const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
-    entry: ['babel-polyfill', './assets/js/main.js'],
-    plugins: [
-        new CleanWebpackPlugin(['dist']),
-    ],
+    entry: ['babel-polyfill', './src/main.js'],
+    // plugins: [
+    //     new CleanWebpackPlugin(['dist']),
+    // ],
     module: {
-        loaders: [
-            { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-        ],
+        // loaders: [
+        //     { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
+        // ],
         rules: [
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: ['style-loader', 'css-loader'],
+                exclude: /node_modules/,
+            }, {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/
+            },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: ['file-loader'],
+                exclude: /node_modules/
             }
         ]
     },
