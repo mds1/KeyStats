@@ -47,6 +47,9 @@ jQuery(document).ready(function ($) {
 
 
 async function search(event) {
+    // Show loading icon
+    jQuery('#LoadingIcon').html("<h3><i style=\"color:white\" class=\"fa fa-spinner fa-pulse fa-3x\" aria-hidden=\"true\"></i></h3>");
+
     // A <form> will refresh the page by default when the data is submitted. We need to prevent
     // this default behavior when we are submitting data to our own page with preventDefault();
     event.preventDefault();
@@ -130,14 +133,16 @@ async function main(address) {
     let statsM = utilities.parseTransactionData(address, allTXData) // merged normal/internal stats
     let statsN = utilities.parseTransactionData(address, refNormalTXData) // normal stats (for tx costs)
 
-    // calculate statistics -- returns array where indices 0/1/2 = stats total/sent/received
+    // Calculate statistics -- returns array where indices 0/1/2 = stats total/sent/received
     statsM = utilities.calculateStatistics(address, statsM, statsN)
 
-    // generate figures, tables, and plots
+    // Generate figures, tables, and plots
     jQuery('#horiz3').html('<hr>');
     jQuery('#horiz4').html('<hr>');
     figures.generateFigures(...statsM, refNormalTXData, refInternalTXData, address, convfactor, currency)
 
+    // Hide loading image
+    jQuery('#LoadingIcon').html("");
 }
 
 // BEFORE PUSHING CHANGES TO LIVE SITE:
@@ -146,7 +151,7 @@ async function main(address) {
 // 3. Run regular build script
 
 // UP NEXT:
-// 1. How to handle/hide client side API keys?
+// 1. SEO, etc.
 
 // QUESTIONS:
 // 1. How to left align the first tooltip?
