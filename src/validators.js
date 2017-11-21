@@ -7,9 +7,11 @@ export function changeInputBoxOutline(isValid) {
         // If address is invalid, add a red border. Otherwise, make it green
         if (isValid) {
             jQuery("#addressInput").css("border", "thin solid green");
+
         } else {
             jQuery("#addressInput").css("border", "thin solid red");
         }
+
     }).trigger("change"); // end change function
 } // end changeInputBoxOutline
 
@@ -21,9 +23,11 @@ export function isValidETHAddress(address) {
     if (!/^0x[0-9a-f]{40}$/i.test(address)) {
         // check if it has the basic requirements of an address
         return false;
+
     } else if (/^0x[0-9a-f]{40}$/.test(address) || /^0x[0-9A-F]{40}$/.test(address)) {
         // If it's all small caps or all caps, return true
         return true;
+
     } else {
         // Otherwise check if it is a checksum address
         return isValidChecksumETHAddress(address);

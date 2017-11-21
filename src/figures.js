@@ -15,7 +15,7 @@ const bgcolor = '#0B0C10';
 // define color of KeyStats logo
 const kscolor = '#1EBAFF';
 
-// set plot colors
+// set plot colors (these are the plotly default colors)
 const colors = {
     blue: '#1f77b4',  // muted blue
     orange: '#ff7f0e',  // safety orange
@@ -752,6 +752,7 @@ function generateFreqTable(divID, freqData, direction) {
         { title: "Direction", field: "direction", visible: false },
         { title: "Frequency", field: "frequency", formatter: "plaintext", sorter: "number" },
     ]
+
     // Turn element into a Tabulator by passing a constructor object to the tabulator jQuery widget
     // jQuery(divID).tabulator("destroy");
     jQuery(divID).tabulator({
@@ -839,6 +840,7 @@ function generateNormalTXTable(divID, normalTXData, address, convfactor, currenc
     jQuery(divID).tabulator("setData", tableData);
 
 } // generateNormalTXTable
+
 
 // Generates the 6 column table shown on Etherscan for internal transactions, but is sortable/filterable
 function generateInternalTXTable(divID, internalTXData, address, convfactor, currency) {

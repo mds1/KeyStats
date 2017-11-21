@@ -39,8 +39,7 @@ jQuery(document).ready(function ($) {
     //     jQuery('#addressForm').submit();
     // }
 
-    // Register 'submit' handler on <form> element of full-width-page-enter-address.php.
-    // The .on('submit') below calls the search() function whenever the form is submitted:
+    // Register 'submit' handler of <form> element of index.html, then call search function
     $('#addressForm').on('submit', search)
 
 });
@@ -50,11 +49,10 @@ async function search(event) {
     // Show loading icon
     jQuery('#LoadingIcon').html("<h3><i style=\"color:white\" class=\"fa fa-spinner fa-pulse fa-3x\" aria-hidden=\"true\"></i></h3>");
 
-    // A <form> will refresh the page by default when the data is submitted. We need to prevent
-    // this default behavior when we are submitting data to our own page with preventDefault();
+    // A <form> refreshes the page when data is submitted, so preventDefault() prevents this
     event.preventDefault();
 
-    // hide the keyboard on mobile by taking focus away (using .blur()) from the search box
+    // hide keyboard on mobile by taking focus away from search box
     jQuery('#addressInput').blur();
 
     // Assign the entered address to a variable
@@ -69,7 +67,7 @@ async function search(event) {
 
 async function main(address) {
 
-    // clear any existing figures/tables/headers
+    // Clear any existing figures/tables/headers
     jQuery("#horiz1").empty();
     jQuery("#horiz2").empty();
     jQuery("#horiz3").empty();
@@ -93,13 +91,14 @@ async function main(address) {
     utilities.removeExistingTable("#tableOfNormalTXData");
     utilities.removeExistingTable("#tableOfInternalTXData");
 
-    // check that the address is valid
+    // Check that the address is valid
     const isValid = validators.isValidETHAddress(address);
 
-    // highlight input box accordingly and output text if address is invalid
+    // Highlight input box accordingly and output text if address is invalid
     validators.changeInputBoxOutline(isValid)
 
     if (!isValid) {
+        jQuery('#LoadingIcon').html(""); // clear loading icon
         jQuery('#horiz1').html('<hr>');
         jQuery('#balance').html('<p>Invalid Address Entered</p>');
         jQuery('#horiz2').html('<hr>');
@@ -112,6 +111,7 @@ async function main(address) {
     } else {
         var currency = jQuery('#currencyDropdown').val();
     }
+
     // Call All APIs
     const APIData = await api.callAPIs(address, isValid, currency)
     const balanceData = APIData[0].status == "1" ? APIData[0].result : null
