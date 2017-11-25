@@ -69,9 +69,18 @@ html {
     -webkit-text-size-adjust: 100%
 }
 
-/** custom page/footer formatting */
+/** sticky footer formatting */
+#wrapper {
+    margin-bottom: 165px; /* set slightly larger than height of footer-content*/
+}
 #footer-content {
-  background: #1EBAFF;
+    background: #1EBAFF;
+    position: absolute;
+    height: 155px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
 .footer-small, .footer-end {
     font-size: small;
@@ -86,7 +95,9 @@ html {
     margin: 0% 4% 0% 4%;
     padding: 1% 0% 0% 0%;
 }
+/** end sticky footer formatting */
 
+/* table width formatting */
 .figure {
     max-width: 1250px;
     margin: 0 auto;
@@ -97,7 +108,8 @@ html {
 .table-large {
     width: 92%;
 }
-/** end custom page/footer formatting */
+/* end table width formatting */
+
 
 body {
     margin: 0 auto;
