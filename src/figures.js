@@ -13,11 +13,12 @@ const textcolor = '#FFFFFF';
 const bgcolor = '#0B0C10';
 
 // define color of KeyStats logo
-const kscolor = '#1EBAFF';
+const kscolor = '#03A9F4';
 
 // set plot colors (these are the plotly default colors)
 const colors = {
-    blue: '#1f77b4',  // muted blue
+    // blue: '#1f77b4',  // muted blue
+    blue: '#0288D1',
     orange: '#ff7f0e',  // safety orange
     green: '#2ca02c',  // cooked asparagus green
     red: '#d62728',  // brick red

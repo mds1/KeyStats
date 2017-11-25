@@ -74,7 +74,7 @@ html {
     margin-bottom: 165px; /* set slightly larger than height of footer-content*/
 }
 #footer-content {
-    background: #1EBAFF;
+    background: #03A9F4;
     position: absolute;
     height: 155px;
     right: 0;
@@ -86,14 +86,18 @@ html {
     font-size: small;
     max-width: 90%;
     margin: 0% 4% 0% 4%;
+    color: #FFFFFF;
 }
 .footer-end {
     padding: 0% 0% 1% 0%;
+    color: #B3E5FC;
 }
 .footer-large {
     font-size: medium;
     margin: 0% 4% 0% 4%;
     padding: 1% 0% 0% 0%;
+    color: #FFFFFF;
+    font-weight: 500;
 }
 /** end sticky footer formatting */
 
@@ -758,7 +762,7 @@ input[type="reset"],
 input[type="submit"],
 input[type="button"] {
     background: none;
-    background-color: #199cd8;
+    background-color: #03A9F4;
     background-clip: border-box;
     border: 1px solid transparent;
     border-radius: 4px;
@@ -795,7 +799,7 @@ input[type="reset"]:active,
 input[type="submit"]:active,
 input[type="button"]:active {
     background: none;
-    background-color: #199cd8;
+    background-color: #03A9F4;
     box-shadow: none;
     text-shadow: none
 }
@@ -819,7 +823,7 @@ input[type="button"]:active {
 .primary-button,
 .woocommerce a.button.primary-button,
 .woocommerce-page a.button.primary-button {
-    background-color: #199cd8
+    background-color: #03A9F4
 }
 
 .primary-button,
@@ -848,7 +852,7 @@ input[type="button"]:active {
 .secondary-button:hover,
 .woocommerce a.button.secondary-button:hover,
 .woocommerce-page a.button.secondary-button:hover {
-    background-color: #199cd8
+    background-color: #03A9F4
 }
 
 .site-header .secondary-button,
@@ -1182,7 +1186,7 @@ th {
 }
 
 a {
-    color: #199cd8;
+    color: #03A9F4;
     text-decoration: none
 }
 
@@ -2667,7 +2671,7 @@ ul.products .woobutton-small {
 }
 
 .products .shop_moredetails {
-    background-color: #199cd8;
+    background-color: #03A9F4;
     border-radius: 4px;
     display: inline-block!important;
     margin-top: 15px!important;
