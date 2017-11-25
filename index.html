@@ -14,6 +14,9 @@
     <!-- Specify encoding and viewport settings -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- without this, Chrome thinks the page is in Welsh -->
+    <meta http-equiv="Content-Language" content="en">
+
 
     <!-- Load libraries -->
 
@@ -40,113 +43,127 @@
 
 </head>
 
-<!-- Center everything -->
-<div style="text-align:center">
-    <!-- Image of logo -->
-    <img src="logo.png" alt="" width="504" height="149.76" class="aligncenter size-large" />
+<body>
+    <!-- Center everything -->
+
+    <div id="wrapper" style="text-align:center">
+        <!-- Image of logo -->
+        <img src="keystats-logo.png" alt="" width="504" height="149.76" class="aligncenter size-large" />
 
 
-    <!-- Create input form field (action="." gives "search" button on mobile keyboards) -->
-    <form action="." id="addressForm">
-        <input id="addressInput" type="text" size="50" placeholder="Enter Ethereum Address">
-        <button id="submitAddressButton">Submit</button>
+        <!-- Create input form field (action="." gives "search" button on mobile keyboards) -->
+        <form action="." id="addressForm">
+            <input id="addressInput" type="text" size="50" placeholder="Enter Ethereum Address">
+            <button id="submitAddressButton">Submit</button>
+            <br>
+
+            <!-- Add dropdown for currency selector -->
+            <label for="currencyDropdown" style="color:#FFFFFF">Select Currency&nbsp;&nbsp;</label>
+            <select id="currencyDropdown">
+                <option value="ETH">ETH</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <!-- add separator -->
+                <option disabled>&#9472;</option>
+                <option value="AUD">AUD</option>
+                <option value="BRL">BRL</option>
+                <option value="CAD">CAD</option>
+                <option value="CHF">CHF</option>
+                <option value="CLP">CLP</option>
+                <option value="CNY">CNY</option>
+                <option value="CZK">CZK</option>
+                <option value="DKK">DKK</option>
+                <option value="GBP">GBP</option>
+                <option value="HKD">HKD</option>
+                <option value="HUF">HUF</option>
+                <option value="IDR">IDR</option>
+                <option value="ILS">ILS</option>
+                <option value="INR">INR</option>
+                <option value="JPY">JPY</option>
+                <option value="KRW">KRW</option>
+                <option value="MXN">MXN</option>
+                <option value="MYR">MYR</option>
+                <option value="NOK">NOK</option>
+                <option value="NZD">NZD</option>
+                <option value="PHP">PHP</option>
+                <option value="PKR">PKR</option>
+                <option value="PLN">PLN</option>
+                <option value="RUB">RUB</option>
+                <option value="SEK">SEK</option>
+                <option value="SGD">SGD</option>
+                <option value="THB">THB</option>
+                <option value="TRY">TRY</option>
+                <option value="TWD">TWD</option>
+                <option value="ZAR">ZAR</option>
+            </select>
+        </form>
+        <!-- Add tooltip for notes about the output data -->
+        <font size="2">
+            <i>
+                <p class="caveats" title="Hey there! This site pulls data from the Etherscan API, which means there 's a few things to note:<ul><li>Only the last 10,000 transactions are shown</li><li>Accounts with many internal transactions may show incorrect data (e.g. more ETH sent than received), since that function is in beta</li><li>Other caveats will be displayed near the appropriate figures</li></ul>"
+                    style="color:#FFFFFF" ;>Caveats regarding outputs&nbsp;&nbsp;
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                </p>
+            </i>
+        </font>
+        <br>
         <br>
 
-        <!-- Add dropdown for currency selector -->
-        <label for="currencyDropdown" style="color:#FFFFFF">Select Currency&nbsp;&nbsp;</label>
-        <select id="currencyDropdown">
-            <option value="ETH">ETH</option>
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <!-- add separator -->
-            <option disabled>&#9472;</option>
-            <option value="AUD">AUD</option>
-            <option value="BRL">BRL</option>
-            <option value="CAD">CAD</option>
-            <option value="CHF">CHF</option>
-            <option value="CLP">CLP</option>
-            <option value="CNY">CNY</option>
-            <option value="CZK">CZK</option>
-            <option value="DKK">DKK</option>
-            <option value="GBP">GBP</option>
-            <option value="HKD">HKD</option>
-            <option value="HUF">HUF</option>
-            <option value="IDR">IDR</option>
-            <option value="ILS">ILS</option>
-            <option value="INR">INR</option>
-            <option value="JPY">JPY</option>
-            <option value="KRW">KRW</option>
-            <option value="MXN">MXN</option>
-            <option value="MYR">MYR</option>
-            <option value="NOK">NOK</option>
-            <option value="NZD">NZD</option>
-            <option value="PHP">PHP</option>
-            <option value="PKR">PKR</option>
-            <option value="PLN">PLN</option>
-            <option value="RUB">RUB</option>
-            <option value="SEK">SEK</option>
-            <option value="SGD">SGD</option>
-            <option value="THB">THB</option>
-            <option value="TRY">TRY</option>
-            <option value="TWD">TWD</option>
-            <option value="ZAR">ZAR</option>
-        </select>
-    </form>
-    <!-- Add tooltip for notes about the output data -->
-    <font size="2">
-        <i>
-            <p class="caveats" title="Hey there! This site pulls data from the Etherscan API, which means there 's a few things to note:<ul><li>Only the last 10,000 transactions are shown</li><li>Accounts with many internal transactions may show incorrect data (e.g. more ETH sent than received), since that function is in beta</li><li>Other caveats will be displayed near the appropriate figures</li></ul>"
-                style="color:#FFFFFF" ;>Caveats regarding outputs&nbsp;&nbsp;
-                <i class="fa fa-info-circle" aria-hidden="true"></i>
-            </p>
-        </i>
-    </font>
-    <br>
-    <br>
+        <div id="LoadingIcon"></div>
 
-    <div id="LoadingIcon"></div>
-
-    <div id="horiz1" class="horizontalLine"></div>
-    <!-- divs for horizontal separator lines -->
-    <font size="+1">
-        <div id="balance" style="color:#FFFFFF"></div>
-        <!-- for account balance -->
-    </font>
-    <div id="horiz2" class="horizontalLine"></div>
-    <br>
-    <div id="master">
-        <!-- divs for transaction value plots -->
-        <div id="TXValueTitle"></div>
-        <div id="NumAndQtyOfSentAndRecTX" style="color:#000000"></div>
-        <div id="accountBalanceVsTime" style="color:#000000"></div>
-        <div id="scatterOfTXValue" style="color:#000000"></div>
-        <div id="boxPlotOfTXValue" style="color:#000000"></div>
-        <div id="histogramOfTXValue" style="color:#000000"></div>
-
-
-        <!-- divs for gas stats plots -->
+        <div id="horiz1" class="horizontalLine"></div>
+        <!-- divs for horizontal separator lines -->
+        <font size="+1">
+            <div id="balance" style="color:#FFFFFF"></div>
+            <!-- for account balance -->
+        </font>
+        <div id="horiz2" class="horizontalLine"></div>
         <br>
-        <div id="horiz3" class="horizontalLine"></div>
-        <div id="TXCostTitle"></div>
-        <div id="totalGasCostVsTime" style="color:#000000"></div>
-        <div id="scatterOfTXCost" style="color:#000000"></div>
-        <div id="boxPlotOfTXCost" style="color:#000000"></div>
+        <div id="master">
+            <!-- divs for transaction value plots -->
+            <div class="figure" id="TXValueTitle"></div>
+            <div class="figure" id="NumAndQtyOfSentAndRecTX" style="color:#000000"></div>
+            <div class="figure" id="accountBalanceVsTime" style="color:#000000"></div>
+            <div class="figure" id="scatterOfTXValue" style="color:#000000"></div>
+            <div class="figure" id="boxPlotOfTXValue" style="color:#000000"></div>
+            <div class="figure" id="histogramOfTXValue" style="color:#000000"></div>
 
-        <!-- divs for tables -->
-        <br>
-        <div id="horiz4" class="horizontalLine"></div>
-        <div id="frequencyTitle"></div>
-        <div id="tableOfSentAddressFrequency"></div>
-        <br>
-        <div id="tableOfReceivedAddressFrequency"></div>
-        <br>
-        <div id="normalTXtitle"></div>
-        <div id="tableOfNormalTXData"></div>
-        <br>
-        <div id="internalTXtitle"></div>
-        <div id="tableOfInternalTXData"></div>
 
+            <!-- divs for gas stats plots -->
+            <br>
+            <div id="horiz3" class="horizontalLine"></div>
+            <div class="figure" id="TXCostTitle"></div>
+            <div class="figure" id="totalGasCostVsTime" style="color:#000000"></div>
+            <div class="figure" id="scatterOfTXCost" style="color:#000000"></div>
+            <div class="figure" id="boxPlotOfTXCost" style="color:#000000"></div>
+
+            <!-- divs for tables -->
+            <br>
+            <div id="horiz4" class="horizontalLine"></div>
+            <div id="frequencyTitle"></div>
+            <div class="table-small" id="tableOfSentAddressFrequency"></div>
+            <br>
+            <div class="table-small" id="tableOfReceivedAddressFrequency"></div>
+            <br>
+            <div id="normalTXtitle"></div>
+            <div class="table-large" id="tableOfNormalTXData"></div>
+            <br>
+            <div id="internalTXtitle"></div>
+            <div class="table-large" id="tableOfInternalTXData"></div>
+
+        </div>
     </div>
-</div>
+
+
+    <div id="footer-content">
+        <p class="footer-large" style="color:#FFFFFF">Donations are greatly appreciated!</p>
+        <p class="footer-small" style="color:#FFFFFF">ETH: 0xe9CC393b21C5B0E7059F1659F8BedcF4cb18dA82</p>
+        <p class="footer-small" style="color:#FFFFFF">BTC: 1N8eEBCGx646oVfSwWpCbtHxSeaU1Q4EK5</p>
+        <br>
+        <p class="footer-end" style="color:#FFFFFF">KeyStats &copy; 2017</p>
+    </div>
+    </div>
+</body>
+
 
 </html>

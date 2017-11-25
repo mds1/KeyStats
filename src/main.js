@@ -26,6 +26,10 @@ import './tippy.css';
 // Once the page has loaded, do everything
 jQuery(document).ready(function ($) {
 
+    // Add page break so footer reaches the bottom
+    jQuery('#LoadingIcon').html("<br><br><br>");
+
+
     // Add tooltip for caveats
     tippy('.caveats', {
         theme: 'dark',
@@ -47,6 +51,7 @@ jQuery(document).ready(function ($) {
 
 async function search(event) {
     // Show loading icon
+    jQuery('#LoadingIcon').html("");
     jQuery('#LoadingIcon').html("<h3><i style=\"color:white\" class=\"fa fa-spinner fa-pulse fa-3x\" aria-hidden=\"true\"></i></h3>");
 
     // A <form> refreshes the page when data is submitted, so preventDefault() prevents this

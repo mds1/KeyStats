@@ -69,9 +69,38 @@ html {
     -webkit-text-size-adjust: 100%
 }
 
+/** custom page/footer formatting */
+#footer-content {
+  background: #1EBAFF;
+}
+.footer-small, .footer-end {
+    font-size: small;
+    max-width: 90%;
+    margin: 0% 4% 0% 4%;
+}
+.footer-end {
+    padding: 0% 0% 1% 0%;
+}
+.footer-large {
+    font-size: medium;
+    margin: 0% 4% 0% 4%;
+    padding: 1% 0% 0% 0%;
+}
+
+.figure {
+    max-width: 1250px;
+    margin: 0 auto;
+}
+.table-small {
+    max-width: 550px;
+}
+.table-large {
+    width: 92%;
+}
+/** end custom page/footer formatting */
+
 body {
     margin: 0 auto;
-    max-width: 1250px
 }
 
 #page {

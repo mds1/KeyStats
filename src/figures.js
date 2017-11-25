@@ -748,7 +748,7 @@ function generateFreqTable(divID, freqData, direction) {
 
     // Generate table
     const columns = [
-        { title: column1header, field: "address", sorter: "string", },//minWidth: 275 },
+        { title: column1header, field: "address", sorter: "string", minWidth: 400 },
         { title: "Direction", field: "direction", visible: false },
         { title: "Frequency", field: "frequency", formatter: "plaintext", sorter: "number" },
     ]
@@ -793,10 +793,23 @@ function generateNormalTXTable(divID, normalTXData, address, convfactor, currenc
             var direction = 'Received'
         }
 
-        // configure Etherscan hyperlink to txhash
+        // configure Etherscan hyperlink to block number and txhash
+        const blocknum = normalTXData.blockNumber[i]
+        const blocknumlink = "https://etherscan.io/block/" + blocknum
+        const blockhtml = "<a href=\"" + blocknumlink + "\"target=\"_blank\">" + blocknum + "</a>"
+
         const txhash = normalTXData.hash[i]
         const txhashlink = "https://etherscan.io/tx/" + txhash
         const txhashhtml = "<a href=\"" + txhashlink + "\"target=\"_blank\">" + txhash + "</a>"
+
+        // format value and txcost outputs
+        var value = utilities.convert(convfactor, normalTXData.value[i])
+        var txcost = utilities.convert(convfactor, normalTXData.gasPrice[i] * normalTXData.gasUsed[i])
+        if (currency != 'ETH') {
+            // truncate decimals
+            value = value.toLocaleString()
+            txcost = txcost.toLocaleString()
+        }
 
         // add data
         tableData.push({
@@ -807,8 +820,9 @@ function generateNormalTXTable(divID, normalTXData, address, convfactor, currenc
             from: normalTXData.from[i],
             direction: direction,
             to: normalTXData.to[i],
-            value: utilities.convert(convfactor, normalTXData.value[i]).toLocaleString(),
-            txcost: utilities.convert(convfactor, normalTXData.gasPrice[i] * normalTXData.gasUsed[i]),
+            value: value,
+            txcost: txcost,
+            block: blockhtml,
             txhash: txhashhtml
         })
     }
@@ -816,20 +830,20 @@ function generateNormalTXTable(divID, normalTXData, address, convfactor, currenc
     // Generate table
     // Turn element into a Tabulator by passing a constructor object to the tabulator jQuery widget
     jQuery(divID).tabulator({
-        height: "100%", // set height of table, this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
+        // height: "100%", // set height of table, this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
         layout: "fitColumns",
-        columnMinWidth: 135,
+        columnMinWidth: 100,
         pagination: "local",
         paginationSize: 20,
         columns: [ //Define Table Columns
-            // { title: "Block", field: "block", sorter: "number", width: 50 },
-            { title: "Date", field: "date", sorter: "string", width: 150 },
-            { title: "From", field: "from", sorter: "string", width: 50 },
-            { title: "Direction", field: "direction", sorter: "string", width: 50 },
-            { title: "To", field: "to", sorter: "string", width: 50 },
-            { title: "Value (" + currency + ")", field: "value", sorter: "number", width: 50 },
-            { title: "TxCost (" + currency + ")", field: "txcost", sorter: "number", width: 50 },
-            { title: "TxHash", field: "txhash", sorter: "number", formatter: "html", width: 100 },
+            { title: "Date", field: "date", sorter: "string", width: 175 },
+            { title: "From", field: "from", sorter: "string", width: 150 },
+            { title: "Direction", field: "direction", sorter: "string", width: 100 },
+            { title: "To", field: "to", sorter: "string", width: 150 },
+            { title: "Value (" + currency + ")", field: "value", sorter: "number", width: 135 },
+            { title: "TxCost (" + currency + ")", field: "txcost", sorter: "number", width: 135 },
+            { title: "Block", field: "block", sorter: "number", formatter: "html", width: 100 },
+            { title: "TxHash", field: "txhash", sorter: "number", formatter: "html" },
         ],
         initialSort: [
             { column: "date", dir: "desc" }, //sort by date
@@ -862,10 +876,21 @@ function generateInternalTXTable(divID, internalTXData, address, convfactor, cur
             var direction = 'Received'
         }
 
-        // configure Etherscan hyperlink to txhash
+        // configure Etherscan hyperlink to block number and txhash
+        const blocknum = internalTXData.blockNumber[i]
+        const blocknumlink = "https://etherscan.io/block/" + blocknum
+        const blockhtml = "<a href=\"" + blocknumlink + "\"target=\"_blank\">" + blocknum + "</a>"
+
         const txhash = internalTXData.hash[i]
         const txhashlink = "https://etherscan.io/tx/" + txhash
         const txhashhtml = "<a href=\"" + txhashlink + "\"target=\"_blank\">" + txhash + "</a>"
+
+        // format value output
+        var value = utilities.convert(convfactor, internalTXData.value[i])
+        if (currency != 'ETH') {
+            // truncate decimals
+            value = value.toLocaleString()
+        }
 
         // push data to tableData array
         tableData.push({
@@ -876,7 +901,8 @@ function generateInternalTXTable(divID, internalTXData, address, convfactor, cur
             from: internalTXData.from[i],
             direction: direction,
             to: internalTXData.to[i],
-            value: utilities.convert(convfactor, internalTXData.value[i]).toLocaleString(),
+            value: value,
+            block: blockhtml,
             txhash: txhashhtml
         })
     }
@@ -884,19 +910,19 @@ function generateInternalTXTable(divID, internalTXData, address, convfactor, cur
     // Generate table
     // Turn element into a Tabulator by passing a constructor object to the tabulator jQuery widget
     jQuery(divID).tabulator({
-        height: "100%", // set height of table, this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
+        //     height: "100%", // set height of table, this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
         layout: "fitColumns",
-        columnMinWidth: 135,
+        columnMinWidth: 100,
         pagination: "local",
         paginationSize: 20,
         columns: [ //Define Table Columns
             // { title: "Block", field: "block", sorter: "number", width: 50 },
-            { title: "Date", field: "date", sorter: "string", width: 150 },
-            { title: "From", field: "from", sorter: "string", width: 50 },
-            { title: "Direction", field: "direction", sorter: "string", width: 50 },
-            { title: "To", field: "to", sorter: "string", width: 50 },
-            { title: "Value (" + currency + ")", field: "value", sorter: "number", width: 50 },
-            { title: "TxHash", field: "txhash", sorter: "number", formatter: "html", width: 100 },
+            { title: "Date", field: "date", sorter: "string", width: 175 },
+            { title: "From", field: "from", sorter: "string" },
+            { title: "Direction", field: "direction", sorter: "string", width: 100 },
+            { title: "To", field: "to", sorter: "string", },
+            { title: "Value (" + currency + ")", field: "value", sorter: "number", width: 135 },
+            { title: "TxHash", field: "txhash", sorter: "number", formatter: "html" },
         ],
         initialSort: [
             { column: "date", dir: "desc" }, //sort by date
