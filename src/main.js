@@ -150,18 +150,8 @@ async function main(address) {
     jQuery('#LoadingIcon').html("");
 }
 
-// BEFORE PUSHING CHANGES TO LIVE SITE:
-// 1. Create minified css file of table formatting
-// 2. Update functions.php to use the minified version
-// 3. Run regular build script
-
-// UP NEXT:
-// 1. SEO, etc.
-
 // QUESTIONS:
-// 1. How to left align the first tooltip?
-// 2. How to shrink the width of the frequency tables?
-// 3. How to configure site with JS so entering an address in the URL computes data, and can be linked to?
+// 1. How to configure site with JS so entering an address in the URL computes data, and can be linked to?
 
 // EVENTUALLY:
 // 1. Add support for  multiple address (with choice to sum results or compare them)
