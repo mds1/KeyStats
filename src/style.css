@@ -82,15 +82,21 @@ html {
     left: 0;
     width: 100%;
 }
-.footer-small, .footer-end {
+.footer-small, .footer-end-left, .footer-end-right {
     font-size: small;
     max-width: 90%;
     margin: 0% 4% 0% 4%;
     color: #FFFFFF;
 }
-.footer-end {
-    padding: 0% 0% 1% 0%;
+.footer-end-left, .footer-end-right {
+    /* padding: 0% 0% 1% 0%; */
     color: #B3E5FC;
+}
+.footer-end-left {
+    float: left;
+}
+.footer-end-right {
+    float: right;
 }
 .footer-large {
     font-size: medium;
