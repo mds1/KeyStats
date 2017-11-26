@@ -69,18 +69,19 @@ html {
     -webkit-text-size-adjust: 100%
 }
 
-/** sticky footer formatting */
+/** sticky 3-column footer formatting */
 #wrapper {
-    margin-bottom: 165px; /* set slightly larger than height of footer-content*/
+    margin-bottom: 125px; /* set slightly larger than height of footer-content*/
 }
-#footer-content {
+.footer-content {
     background: #03A9F4;
     position: absolute;
-    height: 155px;
+    height: 115px;
     right: 0;
     bottom: 0;
     left: 0;
     width: 100%;
+    text-align: center;
 }
 .footer-small, .footer-end-left, .footer-end-right {
     font-size: small;
@@ -105,7 +106,44 @@ html {
     color: #FFFFFF;
     font-weight: 500;
 }
-/** end sticky footer formatting */
+
+.footer-col {
+    float: left;
+    text-align: left;
+    width: 33%;
+}
+/* Clear floats after the columns */
+.footer-content:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+/* Responsive layout - makes the columns stack based on window width */
+@media (max-width: 1200px) {
+    .footer-col {
+        width: 50%;
+    }
+    #wrapper {
+        margin-bottom: 185px; /* set slightly larger than height of footer-content*/
+    }
+    .footer-content {
+        height: 175px;
+    }
+}
+
+@media (max-width: 750px) {
+    .footer-col {
+        width: 100%;
+    }
+    #wrapper {
+        margin-bottom: 265px; /* set slightly larger than height of footer-content*/
+    }
+    .footer-content {
+        height: 255px;
+    }
+}
+
+/** end sticky 3-column footer formatting */
 
 /* table width formatting */
 .figure {
