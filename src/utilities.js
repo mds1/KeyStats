@@ -150,60 +150,10 @@ export function parseTransactionData(address, txlist) {
     // get number of transactions found (normal + internal)
     const ntx = txlist.value.length;
 
-    // Create template statistics arrays
-    // total
-    let statsT = {
-        blockNumber: { val: [] },
-        confirmations: { val: [] },
-        contractAddress: { val: [] },
-        cumulativeGasUsed: { val: [] }, // The total amount of gas used when this transaction was executed in the block. If being used with a smart contact, this would show the total amount of gas that has been used to interact with it.
-        from: { val: [] }, // address of sender
-        gas: { val: [] }, // gas limit, amount supplied for the tx
-        gasPrice: { val: [] }, // The price offered to the miner to purchase this amount of gas, per gas
-        gasUsed: { val: [] }, // amount of gas used by this specific transaction
-        txcost: { val: [] }, // Gas Price * Gas Used By Transaction
-        timeStamp: { val: [] }, // seconds since 01 January 1970 00:00:00 UTC
-        date: { val: [] }, // used to store Date objects created from timeStamp
-        to: { val: [] }, // address of receipient
-        value: { val: [] }, // amount transferred to the recipient
-        ntx: { val: [] }, // number of transactions found
-    }
-
-    // sent
-    let statsS = {
-        blockNumber: { val: [] },
-        confirmations: { val: [] },
-        contractAddress: { val: [] },
-        cumulativeGasUsed: { val: [] },
-        from: { val: [] },
-        gas: { val: [] },
-        gasPrice: { val: [] },
-        gasUsed: { val: [] },
-        txcost: { val: [] },
-        timeStamp: { val: [] },
-        date: { val: [] },
-        to: { val: [] },
-        value: { val: [] },
-        ntx: { val: [] },
-    };
-
-    // received
-    let statsR = {
-        blockNumber: { val: [] },
-        confirmations: { val: [] },
-        contractAddress: { val: [] },
-        cumulativeGasUsed: { val: [] },
-        from: { val: [] },
-        gas: { val: [] },
-        gasPrice: { val: [] },
-        gasUsed: { val: [] },
-        txcost: { val: [] },
-        timeStamp: { val: [] },
-        date: { val: [] },
-        to: { val: [] },
-        value: { val: [] },
-        ntx: { val: [] },
-    };
+    // create template statistics objects
+    let statsT = buildStatsObject()   // total
+    let statsS = buildStatsObject()   // sent
+    let statsR = buildStatsObject()   // received
 
     // assign number of transactions
     statsT.ntx.val = ntx;
@@ -447,6 +397,27 @@ function appendInternalTXData(allTXData, internalTXData, iidx) {
 
     return allTXData
 } // end appendInternalTXData
+
+
+// Create object to be used for statsT, statsS, and statsR
+function buildStatsObject() {
+    return {
+        blockNumber: { val: [] },
+        confirmations: { val: [] },
+        contractAddress: { val: [] },
+        cumulativeGasUsed: { val: [] }, // The total amount of gas used when this transaction was executed in the block. If being used with a smart contact, this would show the total amount of gas that has been used to interact with it.
+        from: { val: [] }, // address of sender
+        gas: { val: [] }, // gas limit, amount supplied for the tx
+        gasPrice: { val: [] }, // The price offered to the miner to purchase this amount of gas, per gas
+        gasUsed: { val: [] }, // amount of gas used by this specific transaction
+        txcost: { val: [] }, // Gas Price * Gas Used By Transaction
+        timeStamp: { val: [] }, // seconds since 01 January 1970 00:00:00 UTC
+        date: { val: [] }, // used to store Date objects created from timeStamp
+        to: { val: [] }, // address of receipient
+        value: { val: [] }, // amount transferred to the recipient
+        ntx: { val: [] }, // number of transactions found
+    }
+}
 
 
 // Deep merge of two objects (source: https://stackoverflow.com/questions/27936772/how-to-deep-merge-instead-of-shallow-merge)
