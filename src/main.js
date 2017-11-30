@@ -11,22 +11,38 @@ import './style.css';
 import './tabulator.css';
 import './tippy.css';
 
-// // Configure site to allow for getting address info via URL instead of search box
-// // First check URL for an ETH address, and if it contains an address, use that
-// if (window.location.pathname.length == 43) {
-//     // save off address
-//     var address = window.location.pathname.replace(/[^a-z0-9]/gi, ''); // sanitize address
-//     // load main page
-//     window.location.href = window.location.origin
-//     jQuery("#addressInput").val(address)
-//     jQuery('#addressForm').submit();
-
+// Configure site to allow for getting address info via URL instead of search box
+// First check URL for an ETH address, and if it contains an address, use that
+// window.onload = function () {
+//     if (window.location.search.length > 40) {
+//         // save off address
+//         var address = window.location.search.replace(/[^a-z0-9]/gi, ''); // sanitize address
+//         // load main page
+//         jQuery("#addressInput").val(address)
+//         jQuery('#addressForm').submit();
+//     }
 // }
+
+
+window.onload = function () {
+    if (window.location.hash.length == 43) {
+        var address = window.location.hash.replace(/[^a-z0-9]/gi, ''); // sanitize address
+        // load main page
+        jQuery("#addressInput").val(address);
+
+        // jQuery('#addressForm').submit(function (event) {
+        //     event.preventDefault
+        // });
+        jQuery('#addressForm').submit();
+        jQuery('#addressForm').on('submit', search)
+    }
+}
+
 
 // Once the page has loaded, do everything
 jQuery(document).ready(function ($) {
 
-    // Add page break so footer reaches the bottom
+    // Add page break so footer reaches the bottom -- this might be obsolete now after footer updates
     jQuery('#LoadingIcon').html("<br><br><br>");
 
 
@@ -36,12 +52,6 @@ jQuery(document).ready(function ($) {
         arrow: true,
 
     })
-
-    // if (typeof address != 'undefined') {
-    //     // First check if we obtained an address for a URL, and if so fill in input field and submit form
-    //     jQuery("#addressInput").val(address)
-    //     jQuery('#addressForm').submit();
-    // }
 
     // Register 'submit' handler of <form> element of index.html, then call search function
     $('#addressForm').on('submit', search)
