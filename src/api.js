@@ -79,6 +79,14 @@ export function getInternalTXFromEtherscan(address) {
 
 }
 
+export function checkForContractAddress(address) {
+    // Build API query
+    const query = 'https://api.etherscan.io/api?module=contract&action=getabi&address=' + address;
+
+    // send request
+    return jQuery.getJSON(query);
+}
+
 
 // ====================================================================================
 // ============================= Currency Conversion APIs =============================

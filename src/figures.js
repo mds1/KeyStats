@@ -739,9 +739,14 @@ function generateFreqTable(divID, freqData, direction) {
 
     // add transactions to tableData array
     for (let i = 0; i < addresses.length; i++) {
+        // configure hyperlinks to certain parameters
+        const address = addresses[i]
+        const addresslink = "https://www.keystats.tech/?" + address
+        const addresshtml = "<a href=\"" + addresslink + "\"target=\"_blank\">" + address + "</a>"
+
         tableData.push({
             id: i + 1,
-            address: addresses[i],
+            address: addresshtml,
             frequency: freqs[i],
             direction: direction,
         })
@@ -749,8 +754,8 @@ function generateFreqTable(divID, freqData, direction) {
 
     // Generate table
     const columns = [
-        { title: column1header, field: "address", sorter: "string", minWidth: 400 },
-        { title: "Direction", field: "direction", visible: false },
+        { title: column1header, field: "address", sorter: "string", formatter: "html", minWidth: 400 },
+        // { title: "Direction", field: "direction", visible: false },
         { title: "Frequency", field: "frequency", formatter: "plaintext", sorter: "number" },
     ]
 
@@ -794,7 +799,15 @@ function generateNormalTXTable(divID, normalTXData, address, convfactor, currenc
             var direction = 'Received'
         }
 
-        // configure Etherscan hyperlink to block number and txhash
+        // configure hyperlinks to certain parameters
+        const to = normalTXData.to[i]
+        const tolink = "https://www.keystats.tech/?" + to
+        const tohtml = "<a href=\"" + tolink + "\"target=\"_blank\">" + to + "</a>"
+
+        const from = normalTXData.from[i]
+        const fromlink = "https://www.keystats.tech/?" + from
+        const fromhtml = "<a href=\"" + fromlink + "\"target=\"_blank\">" + from + "</a>"
+
         const blocknum = normalTXData.blockNumber[i]
         const blocknumlink = "https://etherscan.io/block/" + blocknum
         const blockhtml = "<a href=\"" + blocknumlink + "\"target=\"_blank\">" + blocknum + "</a>"
@@ -818,9 +831,9 @@ function generateNormalTXTable(divID, normalTXData, address, convfactor, currenc
             // txhash: normalTXData.hash[i],
             // block: normalTXData.blockNumber[i],
             date: utilities.formatDate(normalTXData, i),
-            from: normalTXData.from[i],
+            from: fromhtml,
             direction: direction,
-            to: normalTXData.to[i],
+            to: tohtml,
             value: value,
             txcost: txcost,
             block: blockhtml,
@@ -838,9 +851,9 @@ function generateNormalTXTable(divID, normalTXData, address, convfactor, currenc
         paginationSize: 20,
         columns: [ //Define Table Columns
             { title: "Date", field: "date", sorter: "string", width: 175 },
-            { title: "From", field: "from", sorter: "string", width: 150 },
+            { title: "From", field: "from", sorter: "string", formatter: "html", width: 150 },
             { title: "Direction", field: "direction", sorter: "string", width: 100 },
-            { title: "To", field: "to", sorter: "string", width: 150 },
+            { title: "To", field: "to", sorter: "string", formatter: "html", width: 150 },
             { title: "Value (" + currency + ")", field: "value", sorter: "number", width: 135 },
             { title: "TxCost (" + currency + ")", field: "txcost", sorter: "number", width: 135 },
             { title: "Block", field: "block", sorter: "number", formatter: "html", width: 100 },
@@ -877,7 +890,15 @@ function generateInternalTXTable(divID, internalTXData, address, convfactor, cur
             var direction = 'Received'
         }
 
-        // configure Etherscan hyperlink to block number and txhash
+        // configure hyperlinks to certain parameters
+        const to = internalTXData.to[i]
+        const tolink = "https://www.keystats.tech/?" + to
+        const tohtml = "<a href=\"" + tolink + "\"target=\"_blank\">" + to + "</a>"
+
+        const from = internalTXData.from[i]
+        const fromlink = "https://www.keystats.tech/?" + from
+        const fromhtml = "<a href=\"" + fromlink + "\"target=\"_blank\">" + from + "</a>"
+
         const blocknum = internalTXData.blockNumber[i]
         const blocknumlink = "https://etherscan.io/block/" + blocknum
         const blockhtml = "<a href=\"" + blocknumlink + "\"target=\"_blank\">" + blocknum + "</a>"
@@ -919,9 +940,9 @@ function generateInternalTXTable(divID, internalTXData, address, convfactor, cur
         columns: [ //Define Table Columns
             // { title: "Block", field: "block", sorter: "number", width: 50 },
             { title: "Date", field: "date", sorter: "string", width: 175 },
-            { title: "From", field: "from", sorter: "string" },
+            { title: "From", field: "from", sorter: "string", formatter: "html" },
             { title: "Direction", field: "direction", sorter: "string", width: 100 },
-            { title: "To", field: "to", sorter: "string", },
+            { title: "To", field: "to", sorter: "string", formatter: "html" },
             { title: "Value (" + currency + ")", field: "value", sorter: "number", width: 135 },
             { title: "TxHash", field: "txhash", sorter: "number", formatter: "html" },
         ],

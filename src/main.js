@@ -89,6 +89,7 @@ async function main(address) {
     jQuery("#horiz3").empty();
     jQuery("#horiz4").empty();
     jQuery("#balance").empty();
+    jQuery("#contractAddressCheck").empty();
     jQuery("#NumAndQtyOfSentAndRecTX").empty();
     jQuery("#accountBalanceVsTime").empty();
     jQuery("#scatterOfTXValue").empty();
@@ -131,12 +132,22 @@ async function main(address) {
         var currency = jQuery('#currencyDropdown').val();
     }
 
+    // Make sure address is not a contract address
+    const contractAddressCheck = await api.checkForContractAddress(address);
+
+    if (contractAddressCheck.status == 1 || contractAddressCheck.message == "OK") {
+        jQuery('#contractAddressCheck').html('<p><em>Warning: This is a contract address, so results may not be accurate. Loading times may also be longer than usual.</em></p>');
+    }
+
     // Call All APIs
     const APIData = await api.callAPIs(address, isValid, currency)
     const balanceData = APIData[0].status == "1" ? APIData[0].result : null
     const normalTXData = APIData[1].status == "1" ? APIData[1].result : null
     const internalTXData = APIData[2].status == "1" ? APIData[2].result : null;
     const convfactor = APIData[3][0]['price_' + currency.toLowerCase()] / 1e18; // get conversion factor from Wei to selected currency
+
+
+
 
     // Take call from balance API, convert from Wei to Ether, then display result
     const accountBalance = utilities.convert(convfactor, balanceData);
