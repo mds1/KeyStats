@@ -11,29 +11,16 @@ import './style.css';
 import './tabulator.css';
 import './tippy.css';
 
-// Configure site to allow for getting address info via URL instead of search box
-// First check URL for an ETH address, and if it contains an address, use that
-// window.onload = function () {
-//     if (window.location.search.length > 40) {
-//         // save off address
-//         var address = window.location.search.replace(/[^a-z0-9]/gi, ''); // sanitize address
-//         // load main page
-//         jQuery("#addressInput").val(address)
-//         jQuery('#addressForm').submit();
-//     }
-// }
-
 
 window.onload = function () {
     if (window.location.search.length == 43) {
         // sanitize address in URL
         var address = window.location.search.replace(/[^a-z0-9]/gi, '');
+
         // populate input box
         jQuery("#addressInput").val(address);
+
         // submit form
-        // jQuery('#addressForm').submit(function (event) {
-        // event.preventDefault();
-        // });
         jQuery('#addressForm').submit();
         jQuery('#addressForm').on('submit', search)
     }
@@ -46,43 +33,18 @@ jQuery(document).ready(function ($) {
     // Add page break so footer reaches the bottom -- this might be obsolete now after footer updates
     jQuery('#LoadingIcon').html("<br><br><br>");
 
-
     // Add tooltip for caveats
     tippy('.caveats', {
         theme: 'dark',
         arrow: true,
-
     })
 
     // Register 'submit' handler of <form> element of index.html, then call search function
     $('#addressForm').on('submit', search)
-
 });
 
 
 async function search(event) {
-    // Show loading icon
-    jQuery('#LoadingIcon').html("");
-    jQuery('#LoadingIcon').html("<h3><i style=\"color:white\" class=\"fa fa-spinner fa-pulse fa-3x\" aria-hidden=\"true\"></i></h3>");
-
-    // A <form> refreshes the page when data is submitted, so preventDefault() prevents this
-    event.preventDefault();
-
-    // hide keyboard on mobile by taking focus away from search box
-    jQuery('#addressInput').blur();
-
-    // Assign the entered address to a variable
-    const enteredString = jQuery('#addressInput').val();
-
-    // Remove all non-alphanumeric characters
-    const address = enteredString.replace(/[^a-z0-9]/gi, ''); // sanitize address
-
-    // Run main function
-    main(address)
-}
-
-async function main(address) {
-
     // Clear any existing figures/tables/headers
     jQuery("#horiz1").empty();
     jQuery("#horiz2").empty();
@@ -108,6 +70,32 @@ async function main(address) {
     utilities.removeExistingTable("#tableOfNormalTXData");
     utilities.removeExistingTable("#tableOfInternalTXData");
 
+    // Show loading icon
+    jQuery('#LoadingIcon').html("");
+    jQuery('#LoadingIcon').html("<h3><i style=\"color:white\" class=\"fa fa-spinner fa-pulse fa-3x\" aria-hidden=\"true\"></i></h3>");
+
+    // A <form> refreshes the page when data is submitted, so preventDefault() prevents this
+    event.preventDefault();
+
+    // hide keyboard on mobile by taking focus away from search box
+    jQuery('#addressInput').blur();
+
+    // Assign the entered address to a variable
+    const enteredString = jQuery('#addressInput').val();
+
+    // Remove all non-alphanumeric characters
+    const address = enteredString.replace(/[^a-z0-9]/gi, ''); // sanitize address
+
+    // change URL and page title
+    window.history.pushState([], [], "?" + address)
+    document.title = "Key Stats | " + address
+
+    // Run main function
+    main(address)
+}
+
+async function main(address) {
+
     // Check that the address is valid
     const isValid = validators.isValidETHAddress(address);
 
@@ -120,9 +108,6 @@ async function main(address) {
         jQuery('#balance').html('<p>Invalid Address Entered</p>');
         jQuery('#horiz2').html('<hr>');
         return
-    } else {
-        // change URL
-
     }
 
     // Get currency selected, or use ETH as default
@@ -145,9 +130,6 @@ async function main(address) {
     const normalTXData = APIData[1].status == "1" ? APIData[1].result : null
     const internalTXData = APIData[2].status == "1" ? APIData[2].result : null;
     const convfactor = APIData[3][0]['price_' + currency.toLowerCase()] / 1e18; // get conversion factor from Wei to selected currency
-
-
-
 
     // Take call from balance API, convert from Wei to Ether, then display result
     const accountBalance = utilities.convert(convfactor, balanceData);
