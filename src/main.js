@@ -25,13 +25,14 @@ import './tippy.css';
 
 
 window.onload = function () {
-    if (window.location.hash.length == 43) {
-        var address = window.location.hash.replace(/[^a-z0-9]/gi, ''); // sanitize address
-        // load main page
+    if (window.location.search.length == 43) {
+        // sanitize address in URL
+        var address = window.location.search.replace(/[^a-z0-9]/gi, '');
+        // populate input box
         jQuery("#addressInput").val(address);
-
+        // submit form
         // jQuery('#addressForm').submit(function (event) {
-        //     event.preventDefault
+        // event.preventDefault();
         // });
         jQuery('#addressForm').submit();
         jQuery('#addressForm').on('submit', search)
@@ -118,6 +119,9 @@ async function main(address) {
         jQuery('#balance').html('<p>Invalid Address Entered</p>');
         jQuery('#horiz2').html('<hr>');
         return
+    } else {
+        // change URL
+
     }
 
     // Get currency selected, or use ETH as default
