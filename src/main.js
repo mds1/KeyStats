@@ -131,9 +131,16 @@ async function main(address) {
     const internalTXData = APIData[2].status == "1" ? APIData[2].result : null;
     const convfactor = APIData[3][0]['price_' + currency.toLowerCase()] / 1e18; // get conversion factor from Wei to selected currency
 
-    // Take call from balance API, convert from Wei to Ether, then display result
+    // Take call from balance API, convert from Wei to desired currency, and display output
     const accountBalance = utilities.convert(convfactor, balanceData);
     utilities.displayBalanceResults(accountBalance, currency)
+
+    // Confirm transactions exist
+    if (normalTXData == null && internalTXData == null) {
+        jQuery('#TXValueTitle').html('<p style="color:#FFFFFF"><em>This address has no transaction data to display</em></p>')
+        jQuery('#LoadingIcon').html("");
+        return
+    }
 
     // Reformat and merge normal and internal transaction data, and reformat the normal/internal TX data to match this structure
     const allData = utilities.mergeNormalAndInternalTXData(normalTXData, internalTXData)
